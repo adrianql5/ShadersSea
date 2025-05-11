@@ -51,7 +51,18 @@ A medida que se eliminan todos los barcos de una oleada, el sistema incrementa a
 ---
 
 ## 5. Imagenes
-![Vista del faro](capturas/captura1)
+
+
+![captura1](https://github.com/user-attachments/assets/262b173a-bd7a-4e1b-b543-f290d7ff318c)
+![captura2](https://github.com/user-attachments/assets/9614344b-335e-4967-9810-2adf05bed4d4)
+![captura3](https://github.com/user-attachments/assets/db269180-e17d-416d-9ef6-f4774dc4e707)
+
+![captura5](https://github.com/user-attachments/assets/dc6fd206-e283-41fa-a306-d43f3c926d2e)
+![captura4](https://github.com/user-attachments/assets/944eba2b-dc2b-4db7-b1e2-e2159eff8478)
+
+
+
+
 
 ## 4. 📚 Documentación Externa Consultada
 
