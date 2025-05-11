@@ -58,7 +58,6 @@ A medida que se eliminan todos los barcos de una oleada, el sistema incrementa a
 ![captura3](https://github.com/user-attachments/assets/db269180-e17d-416d-9ef6-f4774dc4e707)
 
 ![captura5](https://github.com/user-attachments/assets/dc6fd206-e283-41fa-a306-d43f3c926d2e)
-![captura4](https://github.com/user-attachments/assets/944eba2b-dc2b-4db7-b1e2-e2159eff8478)
 
 
 
