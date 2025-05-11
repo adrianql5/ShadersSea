@@ -1,6 +1,7 @@
 #include "camara.h"
 #include "definiciones.h"
 
+
 #define DEG_TO_RAD(x) ((x) * 0.01745329252f) // Convierto grados a radianes
 //#define posicionCamara(x, y, z) vec3(0.0, 50, -0.9) // Defino la posición de la cámar
 
@@ -15,16 +16,17 @@ vec3 vectorDirectorCamara;
 
 vec3 cameraRotationPoint = vec3(24.0f, 70.30f, 60.0f); // Defino el centro de rotación de la camara
 
-
+mat4 Mprojection;
+mat4 Mview;
 // Configuro una cámara exterior que me permite ver toda la escena y rotarla alrededor del origen
 void myCamaraExterior(int W_WIDTH, int W_HEIGHT) {
     // Defino la proyección en perspectiva
-    mat4 projection = perspective(radians(45.0f), (float)W_WIDTH / (float)W_HEIGHT, 1.0f, 2000.0f);
+    Mprojection = perspective(radians(45.0f), (float)W_WIDTH / (float)W_HEIGHT, 1.0f, 2000.0f);
     unsigned int projectionLoc = glGetUniformLocation(shadersProgram, "projection");
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(projection));
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(Mprojection));
 
     // Defino la vista usando una cámara orbital
-    mat4 view = lookAt(
+    Mview = lookAt(
         vec3(
             DISTANCIA * sin(DEG_TO_RAD(alpha)) * cos(DEG_TO_RAD(beta)), // Calculo la posición en X
             DISTANCIA * sin(DEG_TO_RAD(beta)), // Calculo la posición en Y
@@ -35,19 +37,19 @@ void myCamaraExterior(int W_WIDTH, int W_HEIGHT) {
     );
 
     unsigned int viewLoc = glGetUniformLocation(shadersProgram, "view");
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(Mview));
 }
 
 void myCamaraCruz(int W_WIDTH, int W_HEIGHT) {
     // Proyección ortográfica: coordenadas de -1 a 1 en ambas dimensiones
-    mat4 projection = ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+    Mprojection = ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
     unsigned int projectionLoc = glGetUniformLocation(shadersProgram, "projection");
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(projection));
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(Mprojection));
 
     // Vista identidad: no aplicamos ninguna transformación
-    mat4 view = mat4(1.0f);
+    Mview = mat4(1.0f);
     unsigned int viewLoc = glGetUniformLocation(shadersProgram, "view");
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(Mview));
 }
 
 
@@ -56,9 +58,9 @@ void myCamaraCruz(int W_WIDTH, int W_HEIGHT) {
 
 void myCamaraFaro(int W_WIDTH, int W_HEIGHT) {
    // Defino la proyección en perspectiva  
-   mat4 projection = perspective(radians(45.0f), (float)W_WIDTH / (float)W_HEIGHT, 1.0f, 3000.0f);  
+   Mprojection = perspective(radians(45.0f), (float)W_WIDTH / (float)W_HEIGHT, 1.0f, 3000.0f);  
    unsigned int projectionLoc = glGetUniformLocation(shadersProgram, "projection");  
-   glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(projection));  
+   glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(Mprojection));  
  
  
    vec3 posCentroFaro = vec3(-200.0f, 0.0f, 0.0f); // Centro de la circunferencia
@@ -78,14 +80,14 @@ void myCamaraFaro(int W_WIDTH, int W_HEIGHT) {
    vectorDirectorCamara = normalize(direction);  
 
    // Defino la vista apuntando al nuevo target  
-   mat4 view = lookAt(  
+   Mview = lookAt(  
        cameraPos,  
        apuntarCamara,  
        vec3(0.0f, 1.0f, 0.0f)  
    );  
 
    unsigned int viewLoc = glGetUniformLocation(shadersProgram, "view");  
-   glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(view));  
+   glUniformMatrix4fv(viewLoc, 1, GL_FALSE, value_ptr(Mview));  
 }
 
 

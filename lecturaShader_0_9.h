@@ -8,8 +8,9 @@
 #endif
 #pragma warning(disable:4996) //Evitamos alguno errores de funciones no seguras
 
-//Librerias necesarias 
+//Librerias necesarias
 #include <glad.h>
+
 #include <glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,17 +20,17 @@
 GLuint vertexShader, fragmentShader; // Definicion  vertex y fragment shader
 GLuint  progShader;					// Definicion de el program Shader
 
-									
-// Para leer los ficheros de texto plano 
+
+// Para leer los ficheros de texto plano
 
 
 char *textFileRead(const char *fn) {
-	
+
 	FILE *fichero;
 	char *contenido = NULL;
 
 	int count = 0;
-	
+
 	if (fn != NULL) {
 		fichero = fopen(fn, "rt");
 
@@ -52,7 +53,7 @@ char *textFileRead(const char *fn) {
 			return NULL;
 		}
 	}
-	
+
 	return contenido;
 }
 
@@ -70,7 +71,7 @@ void printShaderInfoLog(GLuint obj)
 	{
 		infoLog = (char *)malloc(infologLength);
 		glGetShaderInfoLog(obj, infologLength, &charsWritten, infoLog);
-		printf("%s\n", infoLog);
+		//printf("%s\n", infoLog);
 		free(infoLog);
 	}
 }
@@ -87,7 +88,7 @@ void printProgramInfoLog(GLuint obj)
 	{
 		infoLog = (char *)malloc(infologLength);
 		glGetProgramInfoLog(obj, infologLength, &charsWritten, infoLog);
-		printf("%s\n", infoLog);
+		//printf("%s\n", infoLog);
 		free(infoLog);
 	}
 }

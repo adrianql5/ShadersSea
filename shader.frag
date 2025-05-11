@@ -23,7 +23,7 @@ void main()
     // Normalizado
     vec3 norm = normalize(Normal);
 
-    // Dirección hacia la luz
+    // DirecciÃ³n hacia la luz
     vec3 lightDir = normalize(lightPos - FragPos);
 
     // Componente ambiental
@@ -47,7 +47,7 @@ void main()
         float spec = pow(max(dot(viewDir, reflectDir), 0.0), 128);
         vec3 specular = specularStrength * spec * lightColor;
 
-        // Combinación final
+        // CombinaciÃ³n final
         vec3 result = (ambient + diffuse + specular) * (Color.rgb + texturaColor.rgb);
         FragColor = vec4(result, 1.0);
     } else {
@@ -56,3 +56,4 @@ void main()
         FragColor = vec4(result, 1.0);
     }
 }
+

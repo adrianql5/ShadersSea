@@ -12,7 +12,7 @@
 // Propiedades modelos
 #define TAMANO_PROYECTIL 0.5f
 
-#define TAMANO_BARCO 0.08f
+#define TAMANO_BARCO 15.0f
 
 #define TAMANO_FARO 1.5f
 
