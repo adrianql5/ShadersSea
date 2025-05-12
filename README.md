@@ -69,4 +69,3 @@ A medida que se eliminan todos los barcos de una oleada, el sistema incrementa a
 - [Repositorio de TinyObjLoader](https://github.com/tinyobjloader/tinyobjloader)
 - [LearnOpenGL.com](https://learnopengl.com/) – Skybox, Lighting, Camera, Collision Detection
 - Documentación de la API de audio de Windows
-- Foros de Stack Overflow para resolución de problemas específicos
