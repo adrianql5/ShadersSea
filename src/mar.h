@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Adrián Quiroga Linares Lectura y referencia permitidas; reutilización y plagio prohibidos
+
 #pragma warning(disable:4996)
 #include <glad.h>
 #include <glfw3.h>

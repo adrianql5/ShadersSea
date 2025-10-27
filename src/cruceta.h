@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Adrián Quiroga Linares Lectura y referencia permitidas; reutilización y plagio prohibidos
+
 #ifndef CRUCETA_H
 #define CRUCETA_H
 

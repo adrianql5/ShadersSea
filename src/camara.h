@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Adrián Quiroga Linares Lectura y referencia permitidas; reutilización y plagio prohibidos
+
 #ifndef INPUT_H
 #define INPUT_H
 
