@@ -1,4 +1,4 @@
-// Copyright (c) 2025 Adri√°n Quiroga Linares Lectura y referencia permitidas; reutilizaci√≥n y plagio prohibidos
+// Copyright (c) 2025 Adri√É¬°n Quiroga Linares Lectura y referencia permitidas; reutilizaci√É¬≥n y plagio prohibidos
 
 #include <iostream>
 #include <stdio.h>
@@ -8,6 +8,7 @@
 #include <glfw3.h>
 
 #include <ctime>
+#include <limits>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -24,8 +25,8 @@ glm::mat4 dibujarObjeto(const Objeto& objeto, unsigned int transformLoc, unsigne
     // Aplicar transformaciones del objeto
     model = glm::translate(model, glm::vec3(objeto.pos[0], objeto.pos[1], objeto.pos[2]));
     model = glm::scale(model, glm::vec3(objeto.escalado[0], objeto.escalado[1], objeto.escalado[2]));
-	model = glm::rotate(model, glm::radians(objeto.rotacion), glm::vec3(0.0f, 1.0f, 0.0f)); // RotaciÛn en Y
-	//model = glm::rotate(model, glm::radians(2*), glm::vec3(1.0f, 0.0f, 0.0f)); // RotaciÛn en X
+	model = glm::rotate(model, glm::radians(objeto.rotacion), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotaci√≥n en Y
+	//model = glm::rotate(model, glm::radians(2*), glm::vec3(1.0f, 0.0f, 0.0f)); // Rotaci√≥n en X
 
     // Enviar la matriz transformada al shader
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -46,10 +47,10 @@ glm::mat4 dibujarObjeto(const Objeto& objeto, unsigned int transformLoc, unsigne
 }
 
 
-// FUnciÛn que se ejecuta de manera periodica (funciÛn time) para imprimir los barcos activos
+// FUnci√≥n que se ejecuta de manera periodica (funci√≥n time) para imprimir los barcos activos
 void actualizarBarcos(std::vector<Objeto> &barcosActivos, unsigned int transforLoc, unsigned int colorLoc) {
 	for (int i = 0; i < barcosActivos.size(); i++) {
-		// Actualizar la posiciÛn del barco en funciÛn de su velocidad y el tiempo transcurrido
+		// Actualizar la posici√≥n del barco en funci√≥n de su velocidad y el tiempo transcurrido
 		barcosActivos[i].pos += barcosActivos[i].velocidad * barcosActivos[i].direccion;
 
 		dibujarObjeto(barcosActivos[i], transforLoc, colorLoc, glm::mat4(1.0f)); // Dibuja el barco no colisionado
@@ -71,11 +72,11 @@ bool colisionaConAABB(const glm::vec3& punto, const Objeto& barco) {
         punto.z >= min.z && punto.z <= max.z
         );
 }
-// Calcula la distancia m·s corta entre un punto y un AABB
+// Calcula la distancia m√°s corta entre un punto y un AABB
 float distanciaAlAABB(const glm::vec3& punto, const Objeto& barco) {
     glm::vec3 min = barco.pos - barco.hitbox * 0.5f;
     glm::vec3 max = barco.pos + barco.hitbox* 0.5f;
-    glm::vec3 clamped = glm::clamp(punto, min, max); // Punto m·s cercano dentro del AABB
+    glm::vec3 clamped = glm::clamp(punto, min, max); // Punto m√°s cercano dentro del AABB
     return glm::length(clamped - punto);
 }
 
@@ -84,7 +85,7 @@ void actualizarProyectiles(std::vector<Objeto>& proyectilesActivos, std::vector<
         auto& proyectil = proyectilesActivos[i];
         proyectil.pos += proyectil.direccion * proyectil.velocidad;
 
-        // Validar que el proyectil siga dentro del espacio ˙til
+        // Validar que el proyectil siga dentro del espacio √∫til
         if (proyectil.pos.y >= 0 && proyectil.pos.x <= 1000 && proyectil.pos.z <= 1000) {
             dibujarObjeto(proyectil, transforLoc, colorLoc, glm::mat4(1.0f));
 
@@ -93,7 +94,7 @@ void actualizarProyectiles(std::vector<Objeto>& proyectilesActivos, std::vector<
             float menorDistancia = std::numeric_limits<float>::max();
             int barcoMasCercano = -1;
 
-            // Revisar colisiÛn con todos los barcos
+            // Revisar colisi√≥n con todos los barcos
             for (int j = 0; j < barcosActivos.size(); j++) {
                 if (colisionaConAABB(puntoImpacto, barcosActivos[j])) {
                     //printf("Impacto con el barco %d!\n", j);
@@ -103,7 +104,7 @@ void actualizarProyectiles(std::vector<Objeto>& proyectilesActivos, std::vector<
                     break;
                 }
                 else {
-                    // Calcular quÈ tan cerca estuvo
+                    // Calcular qu√© tan cerca estuvo
                     float distancia = distanciaAlAABB(puntoImpacto, barcosActivos[j]);
                     if (distancia < menorDistancia) {
                         menorDistancia = distancia;
@@ -112,14 +113,14 @@ void actualizarProyectiles(std::vector<Objeto>& proyectilesActivos, std::vector<
                 }
             }
 
-            // Si no hubo impacto, mostrar quÈ tan cerca estuvo
+            // Si no hubo impacto, mostrar qu√© tan cerca estuvo
             if (!impacto && barcoMasCercano != -1) {
-                //printf("No hubo impacto. El proyectil pasÛ a %.2f unidades del barco %d\n", menorDistancia, barcoMasCercano);
+                //printf("No hubo impacto. El proyectil pas√≥ a %.2f unidades del barco %d\n", menorDistancia, barcoMasCercano);
             }
         }
         else {
-            // Proyectil fuera del ·rea v·lida
-           // printf("Proyectil fuera de lÌmites en x:%f, y:%f, z:%f\n", proyectil.pos.x, proyectil.pos.y, proyectil.pos.z);
+            // Proyectil fuera del √°rea v√°lida
+           // printf("Proyectil fuera de l√≠mites en x:%f, y:%f, z:%f\n", proyectil.pos.x, proyectil.pos.y, proyectil.pos.z);
             proyectilesActivos.erase(proyectilesActivos.begin() + i);
             continue;
         }
@@ -133,8 +134,8 @@ void actualizarProyectiles(std::vector<Objeto>& proyectilesActivos, std::vector<
 
 
 
-// FUnciÛn para lanzar un proyectil: lo posiciona en la camara y calcula su punto de impacto con el mar
-// DespuÈs se le pasa otra funciÛn para saber si colisiona con un barco. No lo representa en la pantalla.
+// FUnci√≥n para lanzar un proyectil: lo posiciona en la camara y calcula su punto de impacto con el mar
+// Despu√©s se le pasa otra funci√≥n para saber si colisiona con un barco. No lo representa en la pantalla.
 // de eso se encarga actualizarProyectil.
 void lanzarProyectil(unsigned int VAO, glm::vec3 origen, glm::vec3 vectorDirectorCamara, std::vector<Objeto> &barcosActivos, std::vector<Objeto> &proyectilesActivos, float velocidad, unsigned int textura) {
 	Objeto proyectilNuevo;
@@ -146,7 +147,7 @@ void lanzarProyectil(unsigned int VAO, glm::vec3 origen, glm::vec3 vectorDirecto
 	proyectilNuevo.VAO = VAO; // Asignar el VAO del proyectil
 	proyectilNuevo.direccion = vectorDirectorCamara;
     proyectilNuevo.textura= textura;
-	proyectilesActivos.push_back(proyectilNuevo); // AÒadir el proyectil a la lista de proyectiles activos
+	proyectilesActivos.push_back(proyectilNuevo); // A√±adir el proyectil a la lista de proyectiles activos
 
 
 }
@@ -161,8 +162,8 @@ void generarBarcoActivo(unsigned int VAO, glm::vec3 origen, glm::vec3 vectorDire
     barcoNuevo.radioColision = RADIO_COLISION;
     barcoNuevo.VAO = VAO;
 	barcoNuevo.numVertices = 1000000;
-	barcoNuevo.hitbox = { 110, 65, 70 }; // TamaÒo del hitbox (ajustar seg˙n sea necesario)
-	barcoNuevo.rotacion = 90.0f; // RotaciÛn inicial del barco  
+	barcoNuevo.hitbox = { 110, 65, 70 }; // Tama√±o del hitbox (ajustar seg√∫n sea necesario)
+	barcoNuevo.rotacion = 90.0f; // Rotaci√≥n inicial del barco  
     printf("Sale un barco");
     barcosActivos.push_back(barcoNuevo);
 
@@ -173,7 +174,7 @@ void generarBarcosAleatorios(int cantidad, Objeto barco, std::vector<Objeto> &ba
     std::srand(static_cast<unsigned int>(std::time(nullptr))); // Inicializar semilla aleatoria
 
     std::vector<float> zGenerados;
-    const float minDistancia = 30.0f; // Distancia mÌnima entre barcos
+    const float minDistancia = 30.0f; // Distancia m√≠nima entre barcos
     const float zMin = -350.0f;
     const float zMax = 350.0f;
 
@@ -184,7 +185,7 @@ void generarBarcosAleatorios(int cantidad, Objeto barco, std::vector<Objeto> &ba
             zAleatorio = zMin + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (zMax - zMin)));
         } while (zAleatorio > -30.0f && zAleatorio < 30.0f);
 
-        // Verificar que no estÈ "pegado" a otro barco
+        // Verificar que no est√© "pegado" a otro barco
         bool muyCerca = false;
         for (float z : zGenerados) {
             if (std::abs(z - zAleatorio) < minDistancia) {

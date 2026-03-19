@@ -1,4 +1,4 @@
-// Copyright (c) 2025 Adrián Quiroga Linares Lectura y referencia permitidas; reutilización y plagio prohibidos
+// Copyright (c) 2025 AdriÃ¡n Quiroga Linares Lectura y referencia permitidas; reutilizaciÃ³n y plagio prohibidos
 
 /******************************************
   Lectura y Creacion de Shaders
@@ -7,13 +7,14 @@
 
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS //Evitamos alguno errores de funciones no seguras
-#endif
 #pragma warning(disable:4996) //Evitamos alguno errores de funciones no seguras
+#endif
 
 //Librerias necesarias
 #include <glad.h>
 
 #include <glfw3.h>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -103,7 +104,7 @@ GLuint setShaders(const char* nVertx, const char* nFrag) {
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	// Leer el c�digo fuente de los archivos
+	// Leer el código fuente de los archivos
 	char* ficherovs = textFileRead(nVertx);
 	if (ficherovs == NULL) return 0; // Error
 	char* ficherofs = textFileRead(nFrag);
@@ -132,7 +133,7 @@ GLuint setShaders(const char* nVertx, const char* nFrag) {
 	glLinkProgram(progShader);
 	printProgramInfoLog(progShader);
 
-	// Eliminar shaders (ya no son necesarios despu�s de enlazar)
+	// Eliminar shaders (ya no son necesarios después de enlazar)
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 

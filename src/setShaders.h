@@ -1,4 +1,4 @@
-// Copyright (c) 2025 Adrián Quiroga Linares Lectura y referencia permitidas; reutilización y plagio prohibidos
+// Copyright (c) 2025 AdriÃ¡n Quiroga Linares Lectura y referencia permitidas; reutilizaciÃ³n y plagio prohibidos
 
 /******************************************
   Lectura y Creacion de Shaders
@@ -43,9 +43,9 @@ static char* textFileRead(const char* fn) {
     std::string str = contents.str();  // Guarda como string temporal
 
     // Reservar memoria en heap y copiar el contenido
-    char* result = new char[str.size() + 1];
-    std::copy(str.begin(), str.end(), result);
-    result[str.size()] = '\0';  // Null terminaci�n
+    char* result = static_cast<char*>(std::malloc(str.size() + 1));
+    memcpy(result, str.data(), str.size());
+    result[str.size()] = '\0';  // Null terminación
 
     return result;
 }
@@ -185,4 +185,3 @@ setShaders_str(const char *nVertx, const char *nFrag)
 }
 
 #endif
-

@@ -1,10 +1,10 @@
-// Copyright (c) 2025 Adri√°n Quiroga Linares Lectura y referencia permitidas; reutilizaci√≥n y plagio prohibidos
+// Copyright (c) 2025 Adri√É¬°n Quiroga Linares Lectura y referencia permitidas; reutilizaci√É¬≥n y plagio prohibidos
 
-
-
+#ifdef _WIN32
     #include <windows.h>
-    #include <mmsystem.h>  // Necesario para PlaySound
-    #pragma comment(lib, "winmm.lib")  // LibrerÌa de Windows Multimedia 
+    #include <mmsystem.h>
+    #pragma comment(lib, "winmm.lib")
+#endif
     #include <iostream>
     #include <stdio.h>
 
@@ -66,7 +66,7 @@
 
 	int tipoCamara = 0; // 1 = exterior, 0 = faro
 
-    // Variables de c·mara
+    // Variables de c√°mara
 
 
     mat4 view;
@@ -76,6 +76,20 @@
     extern GLuint setShaders(const char* nVertx, const char* nFrag);
     GLuint shadersProgram;
     GLuint shadersBarco;
+
+    namespace {
+        void startBackgroundMusic() {
+#ifdef _WIN32
+            PlaySoundA("resources/sounds/soundtrack.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+#endif
+        }
+
+        void stopBackgroundMusic() {
+#ifdef _WIN32
+            PlaySoundA(NULL, 0, 0);
+#endif
+        }
+    }
 
     void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -102,7 +116,7 @@
             //luz
             unsigned int lightPosLoc = glGetUniformLocation(shadersProgram, "lightPos");
             glUniform3f(lightPosLoc, cameraPos.x, cameraPos.y-1, cameraPos.z);
-            // La luz est· situada debajo del jugador
+            // La luz est√° situada debajo del jugador
 
             //luz
             unsigned int lightDirLoc = glGetUniformLocation(shadersProgram, "luzDir");
@@ -125,7 +139,7 @@
 
 
     void display() {
-            // Actualiza el tiempo de animaciones o lÛgica
+            // Actualiza el tiempo de animaciones o l√≥gica
         tiempo();
 
         glUseProgram(shadersProgram);
@@ -149,7 +163,7 @@
 
 
         if(!tipoCamara) draw_cruceta();
-        // Obtiene la ubicaciÛn de las variables uniformes en el shader
+        // Obtiene la ubicaci√≥n de las variables uniformes en el shader
 
         glUseProgram(shadersProgram);
         // Dibujar terreno
@@ -166,10 +180,10 @@
             generarBarcosAleatorios(nivelActual,barco, barcosActivos);
 
         }
-        // Aumentar en uno el n˙mero de barcos acada vez que se elimina a todos los barcos
+        // Aumentar en uno el n√∫mero de barcos acada vez que se elimina a todos los barcos
 		if (barcosActivos.size() == 0) {
 			if (nivelActual == 1) {
-                PlaySound(TEXT("resources/sounds/soundtrack.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+                startBackgroundMusic();
 			}
 			i--;
             nivelActual++;
@@ -189,7 +203,7 @@
 
     }
 
-    // FunciÛn para inicializar OpenGL
+    // Funci√≥n para inicializar OpenGL
     void openGlInit() {
         //Habilito aqui el depth en vez de arriba para los usuarios de linux y mac mejor arriba
         //Incializaciones varias
@@ -239,7 +253,7 @@
        glfwSetKeyCallback(window, keyCallback);
        glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-       shadersProgram = setShaders("shader.vert", "shader.frag");
+       shadersProgram = setShaders("src/shader.vert", "src/shader.frag");
 
 
        glUniform2f(glGetUniformLocation(shadersProgram, "screenSize"), W_WIDTH, W_HEIGHT);
@@ -271,7 +285,7 @@
         
         
        
-        // Cargar la textura del dÌa
+        // Cargar la textura del d√≠a
         load_skybox_textures({
             "./resources/skybox/Dia1/Daylight_Box_Right.bmp",
             "./resources/skybox/Dia1/Daylight_Box_Left.bmp",
@@ -307,7 +321,7 @@
        }
 
        glfwTerminate();
-       PlaySound(NULL, 0, 0);
+       stopBackgroundMusic();
        return 0;
     }
 
@@ -353,7 +367,7 @@
         if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS && !keyPressed) {
             noche *= -1;
             
-            // Retraso de 100 milisegundos , si no la transiciÛn no es fina 
+            // Retraso de 100 milisegundos , si no la transici√≥n no es fina 
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
             keyPressed2 = true;
         }
