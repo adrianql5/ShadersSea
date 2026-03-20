@@ -1,71 +1,62 @@
-# Proyecto ShadersSea
+# ShadersSea
 
-**Autores**: Xabier Nóvoa Gómez, Adrián Quiroga Linares
+Autores: Xabier Novoa Gomez, Adrian Quiroga Linares
 
----
+ShadersSea es una escena 3D interactiva hecha con OpenGL. La idea del proyecto es simple: un faro situado en una isla debe defender la zona de oleadas de barcos enemigos. Cada vez que se elimina una oleada completa, la siguiente aparece con un barco mas, asi que la dificultad va creciendo de forma progresiva.
 
-## 1. 📄 Descripción General del Proyecto
+## Contenido del proyecto
 
-El proyecto consiste en la simulación interactiva de un faro situado sobre una isla que defiende su entorno de oleadas de barcos enemigos.  
-El faro está equipado con un mecanismo que lanza proyectiles (esferas) hacia los barcos con el objetivo de destruirlos.  
+El proyecto incluye:
 
-A medida que se eliminan todos los barcos de una oleada, el sistema incrementa automáticamente el nivel de dificultad, aumentando la cantidad de barcos por oleada de forma incremental:
+- un skybox con cambio entre ambiente diurno y nocturno
+- iluminacion dinamica asociada al faro
+- generacion de oleadas de barcos
+- disparo de proyectiles con deteccion de colisiones
+- modo de disparo con cruceta y modo de camara libre
+- carga de modelos `.obj` mediante `TinyObjLoader`
 
-- Nivel 1: 1 barco  
-- Nivel 2: 2 barcos  
-- Nivel 3: 3 barcos  
-- ... y así sucesivamente.
+La musica de fondo se activa tras la primera oleada superada. Esa parte usa la API de audio de Windows, asi que en otros sistemas puede no estar disponible.
 
----
+## Compilacion
 
-## 2. ⭐ Características Principales
+El repositorio incluye un `Makefile`, asi que la compilacion se hace directamente con `make`.
 
-- **Skybox**: Implementación de una skybox utilizando un shader embebido para representar el entorno.
-- **Iluminación Realista del Faro**: Movimiento orbital de la luz del faro, simulando el comportamiento de una luz giratoria real.
-- **Sistema de Oleadas**: Incremento automático de dificultad con cada oleada superada.
-- **Mecánica de Disparo**: Lanzamiento de proyectiles desde la cámara con detección de colisiones hacia los barcos enemigos.
-- **Cruceta de Apuntado**: Cruceta activada en modo de disparo, renderizada con un shader embebido para apuntar con precisión.
-- **Carga de Modelos 3D**: Uso de la biblioteca `TinyObjLoader` para cargar modelos `.obj` como barcos y otros objetos.
-- **Música Inmersiva**: Reproducción de música de fondo tras el impacto del primer proyectil, gestionada mediante la API de audio de Windows.
+Requisitos minimos:
 
----
+- `g++` con soporte para C++17
+- `GLFW3`
+- OpenGL
+- `pkg-config`
 
-## 3. 🎮 Controles del Usuario
+Comandos:
 
-### Movimiento de la Cámara
-- `W` - Avanzar  
-- `A` - Girar a la izquierda  
-- `S` - Retroceder  
-- `D` - Girar a la derecha  
+```bash
+make
+make run
+make clean
+```
 
-### Disparo
-- `Espacio` - Lanzar proyectil desde la cámara
+## Controles
 
-### Cambio de Iluminación
-- `N` - Cambiar entre distintos modos de iluminación
+- `W`: avanzar
+- `S`: retroceder
+- `A`: girar a la izquierda
+- `D`: girar a la derecha
+- `Espacio`: disparar
+- `N`: cambiar el modo de iluminacion
+- `1`: modo de disparo con cruceta
+- `2`: modo de camara libre
 
-### Modos de Cámara
-- `1` - Modo disparo con cruceta activada  
-- `2` - Modo libre para observar la escena
+## Capturas
 
----
+![Captura 1](capturas/captura1.png)
+![Captura 2](capturas/captura2.png)
+![Captura 3](capturas/captura3.png)
+![Captura 4](capturas/captura5.png)
 
-## 5. Imagenes
+## Referencias
 
-
-![captura1](https://github.com/user-attachments/assets/262b173a-bd7a-4e1b-b543-f290d7ff318c)
-![captura2](https://github.com/user-attachments/assets/9614344b-335e-4967-9810-2adf05bed4d4)
-![captura3](https://github.com/user-attachments/assets/db269180-e17d-416d-9ef6-f4774dc4e707)
-
-![captura5](https://github.com/user-attachments/assets/dc6fd206-e283-41fa-a306-d43f3c926d2e)
-
-
-
-
-
-## 4. 📚 Documentación Externa Consultada
-
-- [Documentación oficial de OpenGL](https://www.opengl.org/documentation/)
-- [Repositorio de TinyObjLoader](https://github.com/tinyobjloader/tinyobjloader)
-- [LearnOpenGL.com](https://learnopengl.com/) – Skybox, Lighting, Camera, Collision Detection
-- Documentación de la API de audio de Windows
+- [OpenGL Documentation](https://www.opengl.org/documentation/)
+- [TinyObjLoader](https://github.com/tinyobjloader/tinyobjloader)
+- [LearnOpenGL](https://learnopengl.com/)
+- Documentacion de la API de audio de Windows
