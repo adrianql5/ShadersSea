@@ -1,5 +1,3 @@
-// Copyright (c) 2025 Adrián Quiroga Linares Lectura y referencia permitidas; reutilización y plagio prohibidos
-
 #ifndef SKYBOX_H
 #define SKYBOX_H
 
